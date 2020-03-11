@@ -102,7 +102,7 @@ public class GameWindow extends JFrame {
 	 */
 	public void newFood() {
 		foodFactory.generateFood();
-		foodFactory.generateFoodLocation(super.getWidth(), super.getHeight());
+		foodFactory.generateFoodLocation(getWidth(), getHeight());
 		repaint();
 	}
 

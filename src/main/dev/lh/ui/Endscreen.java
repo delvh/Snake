@@ -4,9 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.event.KeyEvent;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -28,15 +26,14 @@ public class Endscreen extends JDialog {
 
 	private final JPanel	contentPanel	= new JPanel();
 	private static int		score			= 0;
-	private final int		goodOrBadResult	= 250;
 
 	/**
 	 * Create the dialog.
 	 *
-	 * @param score1 the highscore to set
+	 * @param score the highscore to set
 	 */
-	public Endscreen(int score1) {
-		setScore(score1);
+	public Endscreen(int score) {
+		Endscreen.score = score;
 		try {
 			// readInHighscoresPoints();
 			// readInHighscoresPlayers();
@@ -85,7 +82,8 @@ public class Endscreen extends JDialog {
 		btnNewButton.addActionListener(e -> { Main.startGame(); setVisible(false); dispose(); });
 		// BLOß NICHT RAUSWERFEN
 		btnNewButton.setIconTextGap(5);
-		btnNewButton.setIcon(new ImageIcon(ClassLoader.getSystemResource("/com/sun/javafx/webkit/prism/resources/mediaPlayDisabled.png")));
+		// btnNewButton.setIcon(new
+		// ImageIcon(ClassLoader.getSystemResource("/com/sun/javafx/webkit/prism/resources/mediaPlayDisabled.png")));
 		// Endscreen.class.getResource("/com/sun/javafx/webkit/prism/resources/mediaPlayDisabled.png")));
 		btnNewButton.setFont(new Font("Times New Roman", Font.PLAIN, 15));
 		btnNewButton.setBounds(85, 512, 243, 100);
@@ -149,22 +147,24 @@ public class Endscreen extends JDialog {
 		// lblYourName.setBounds(10, 355, 82, 29);
 		// contentPanel.add(lblYourName);
 
-		JCheckBox	chckbxNewCheckBox	= new JCheckBox("");
-		JLabel		lblDasIstEin		= new JLabel("Das ist ein hervorragender Wert!");
-		lblDasIstEin.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-		if (score1 >= goodOrBadResult) {
-			chckbxNewCheckBox.setIcon(new ImageIcon(ClassLoader.getSystemResource("/dev/lh/snake/1211548-200.png")));
-			chckbxNewCheckBox.setBounds(300, 200, 200, 200);
-			lblDasIstEin.setBounds(10, 100, 212, 50);
-		} else {
-			chckbxNewCheckBox.setIcon(new ImageIcon(ClassLoader.getSystemResource("/dev/lh/snake/Try_Again.jpg")));
-			chckbxNewCheckBox.setBounds(300, 200, 250, 210);
-			lblDasIstEin.setText("Das kannst du aber noch verbessern!");
-			lblDasIstEin.setBounds(10, 100, 240, 50);
-			contentPanel.add(lblDasIstEin);
-		}
-		contentPanel.add(chckbxNewCheckBox);
-		contentPanel.add(lblDasIstEin);
+		// JCheckBox chckbxNewCheckBox = new JCheckBox("");
+		// JLabel lblDasIstEin = new JLabel("Das ist ein hervorragender Wert!");
+		// lblDasIstEin.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		// if (score >= goodOrBadResult) {
+		// chckbxNewCheckBox.setIcon(new
+		// ImageIcon(ClassLoader.getSystemResource("/dev/lh/snake/1211548-200.png")));
+		// chckbxNewCheckBox.setBounds(300, 200, 200, 200);
+		// lblDasIstEin.setBounds(10, 100, 212, 50);
+		// } else {
+		// chckbxNewCheckBox.setIcon(new
+		// ImageIcon(ClassLoader.getSystemResource("/dev/lh/snake/Try_Again.jpg")));
+		// chckbxNewCheckBox.setBounds(300, 200, 250, 210);
+		// lblDasIstEin.setText("Das kannst du aber noch verbessern!");
+		// lblDasIstEin.setBounds(10, 100, 240, 50);
+		// contentPanel.add(lblDasIstEin);
+		// }
+		// contentPanel.add(chckbxNewCheckBox);
+		// contentPanel.add(lblDasIstEin);
 		setVisible(true);
 	}
 
