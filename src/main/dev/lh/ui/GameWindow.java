@@ -44,7 +44,7 @@ public class GameWindow extends JFrame {
 		setMinimumSize(size);
 		setPreferredSize(size);
 		setMaximumSize(size);
-		setExtendedState(JFrame.MAXIMIZED_BOTH);
+		setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
 		setResizable(false);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 

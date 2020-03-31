@@ -52,10 +52,11 @@ public class Snake implements Updateable {
 		Down;
 	}
 
+	private static FoodFactory	foodFactory	= FoodFactory.getInstance();
+	private static Endscreen	endscreen;
 	private Direction			Richtung;
 	private int					length;
 	private List<Point>			tiles		= new ArrayList<>();
-	private static FoodFactory	foodFactory	= FoodFactory.getInstance();
 	private final int			snakeSize	= 10;
 
 	/**
@@ -67,17 +68,15 @@ public class Snake implements Updateable {
 	public Snake(int length) {
 		this.length	= length;
 		Richtung	= Direction.Right;
-
+		// adding the initial tiles of the snake
 		for (int i = 0; i < length; i++)
-			tiles.add(new Point(320 - 50 * i, 240));
-
-	}// End Constructor
+			tiles.add(new Point(320 - snakeSize * i, 240));
+	}
 
 	@Override
 	public void nextFrame() {
 		int velX = 0, velY = 0;
 		switch (Richtung) {
-
 			case Up:
 				velY = -snakeSize;
 				break;
@@ -90,7 +89,7 @@ public class Snake implements Updateable {
 			case Right:
 				velX = snakeSize;
 				break;
-		}// switch
+		}
 		Point next = (Point) tiles.get(0).clone(), cur;
 		tiles.get(0).x	+= velX;
 		tiles.get(0).y	+= velY;
@@ -101,8 +100,9 @@ public class Snake implements Updateable {
 			next = cur;
 		}
 
-		// case if the snake is outside of the screen or touches itself
-		if (!Main.getGame().getBounds().contains(tiles.get(0)) || checkSelfCollision()) gameOver();
+		// case if snake is outside of the screen or touches itself
+		if (checkSelfCollision()) gameOver();
+		// if (!Main.getGame().getBounds().contains(tiles.get(0))) gameOver();
 
 		// case if snake eats food
 		if (foodFactory.checkCollision(new Rectangle(tiles.get(0).x, tiles.get(0).y, snakeSize, snakeSize))) {
@@ -117,7 +117,7 @@ public class Snake implements Updateable {
 	 * @since Snake 1.1
 	 */
 	private void gameOver() {
-		Endscreen endscreen = new Endscreen(length);
+		endscreen = new Endscreen(length);
 		endscreen.setVisible(true);
 		Main.getGame().close();
 	}

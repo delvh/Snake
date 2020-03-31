@@ -1,13 +1,9 @@
 package dev.lh.ui;
 
-import java.awt.BorderLayout;
-import java.awt.Font;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import dev.lh.Main;
@@ -24,8 +20,9 @@ public class Endscreen extends JDialog {
 
 	private static final long serialVersionUID = -4457484397259161063L;
 
-	private final JPanel	contentPanel	= new JPanel();
-	private static int		score			= 0;
+	private final JPanel		contentPanel	= new JPanel();
+	private int					score			= 0;
+	private static final int	goodOrBadResult	= 200;
 
 	/**
 	 * Create the dialog.
@@ -33,7 +30,7 @@ public class Endscreen extends JDialog {
 	 * @param score the highscore to set
 	 */
 	public Endscreen(int score) {
-		Endscreen.score = score;
+		this.score = score;
 		try {
 			// readInHighscoresPoints();
 			// readInHighscoresPlayers();
@@ -55,7 +52,6 @@ public class Endscreen extends JDialog {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		contentPanel.setLayout(null);
 		// JScrollPane scrollPane = new JScrollPane();
 		// scrollPane.setBounds(10, 412, 349, 238);
 		// contentPanel.add(scrollPane);
@@ -78,16 +74,13 @@ public class Endscreen extends JDialog {
 
 		JButton btnNewButton = new JButton("Play again");
 		btnNewButton.setMnemonic(KeyEvent.VK_ENTER);
-
-		btnNewButton.addActionListener(e -> { Main.startGame(); setVisible(false); dispose(); });
-		// BLOß NICHT RAUSWERFEN
+		btnNewButton.addActionListener(e -> { Main.startGame(); dispose(); });
+		contentPanel.setLayout(new BorderLayout(0, 0));
+		btnNewButton.setIcon(new ImageIcon(ClassLoader.getSystemResource("/com/sun/javafx/webkit/prism/resources/mediaPlayDisabled.png")));
 		btnNewButton.setIconTextGap(5);
-		// btnNewButton.setIcon(new
-		// ImageIcon(ClassLoader.getSystemResource("/com/sun/javafx/webkit/prism/resources/mediaPlayDisabled.png")));
 		// Endscreen.class.getResource("/com/sun/javafx/webkit/prism/resources/mediaPlayDisabled.png")));
 		btnNewButton.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-		btnNewButton.setBounds(85, 512, 243, 100);
-		contentPanel.add(btnNewButton);
+		contentPanel.add(btnNewButton, BorderLayout.SOUTH);
 
 		// JButton btnClose = new JButton("Close game");
 		//
@@ -139,14 +132,17 @@ public class Endscreen extends JDialog {
 
 		JLabel lblDeinPunktestand = new JLabel("Dein Punktestand:	     " + String.valueOf(score));
 		lblDeinPunktestand.setFont(new Font("Times New Roman", Font.PLAIN, 25));
-		lblDeinPunktestand.setBounds(10, 45, 291, 50);
-		contentPanel.add(lblDeinPunktestand);
+		contentPanel.add(lblDeinPunktestand, BorderLayout.NORTH);
 
 		// JLabel lblYourName = new JLabel("Your Name:");
 		// lblYourName.setFont(new Font("Times New Roman", Font.PLAIN, 15));
 		// lblYourName.setBounds(10, 355, 82, 29);
 		// contentPanel.add(lblYourName);
 
+		Image resultImage = Toolkit.getDefaultToolkit()
+			.getImage(this.getClass()
+				.getResource((score < goodOrBadResult) ? "/Snake/src/main/resources/Try_Again.jpg" : "/Snake/src/main/resources/1211548-200.png"));
+		resultImage.flush();
 		// JCheckBox chckbxNewCheckBox = new JCheckBox("");
 		// JLabel lblDasIstEin = new JLabel("Das ist ein hervorragender Wert!");
 		// lblDasIstEin.setFont(new Font("Times New Roman", Font.PLAIN, 15));
@@ -161,10 +157,9 @@ public class Endscreen extends JDialog {
 		// chckbxNewCheckBox.setBounds(300, 200, 250, 210);
 		// lblDasIstEin.setText("Das kannst du aber noch verbessern!");
 		// lblDasIstEin.setBounds(10, 100, 240, 50);
-		// contentPanel.add(lblDasIstEin);
 		// }
-		// contentPanel.add(chckbxNewCheckBox);
-		// contentPanel.add(lblDasIstEin);
+		// contentPanel.add(chckbxNewCheckBox, BorderLayout.CENTER);
+		// contentPanel.add(lblDasIstEin, BorderLayout.EAST);
 		setVisible(true);
 	}
 
@@ -172,13 +167,13 @@ public class Endscreen extends JDialog {
 	 * @return the highscore of the current game
 	 * @since Snake 1.0
 	 */
-	public static int getScore() { return score; }
+	public int getScore() { return score; }
 
 	/**
 	 * @param score the new highscore
 	 * @since Snake 1.0
 	 */
-	public static void setScore(int score) { Endscreen.score = score; }
+	public void setScore(int score) { this.score = score; }
 	/*
 	 * public static void readInHighscoresPoints() { try { // FileReader reads text
 	 * files in the default encoding. FileReader fileReader = new
