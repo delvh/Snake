@@ -1,10 +1,6 @@
 package dev.lh.ui;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Rectangle;
-import java.awt.Toolkit;
+import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -89,7 +85,7 @@ public class GameWindow extends JFrame {
 		});
 
 		Timer timer = new Timer(50,
-				(evt) -> { s.nextFrame(); if (System.currentTimeMillis() >= foodFactory.getTimeOfNextFood()) newFood(); repaint(); });
+				evt -> { s.nextFrame(); if (System.currentTimeMillis() >= foodFactory.getTimeOfNextFood()) newFood(); repaint(); });
 		timer.start();
 
 		setVisible(true);

@@ -29,5 +29,4 @@ public interface Updateable {
 	 * @since Snake 1.0
 	 */
 	void render(Graphics g);
-
 }

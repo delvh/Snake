@@ -4,10 +4,7 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.KeyEvent;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import dev.lh.Main;
@@ -46,35 +43,6 @@ public class StartScreen extends JFrame {
 			}
 		});
 	}
-
-	// public static void readInHighscores() {
-	// try {
-	// combination.clear();
-	// // FileReader reads text files in the default encoding.
-	// FileReader fileReader = new FileReader(fileName);
-	//
-	// // Always wrap FileReader in BufferedReader.
-	// BufferedReader bufferedReader = new BufferedReader(fileReader);
-	//
-	// currentIndex = Integer.parseInt(bufferedReader.readLine());
-	// for (int i = 0; i < currentIndex; i++) {
-	// String[] spielerScore = new String[2];
-	// spielerScore[0] = bufferedReader.readLine();
-	// spielerScore[1] = bufferedReader.readLine();
-	// combination.add(spielerScore);
-	// }
-	// // Always close files.
-	// bufferedReader.close();
-	// fileReader.close();
-	// } catch (FileNotFoundException ex) {
-	// System.out.println("Error 404:File '" + fileName + "' not found");
-	//
-	// } catch (IOException ex) {
-	// System.out.println("Error reading file '" + fileName + "'");
-	// ex.printStackTrace();
-	//
-	// }
-	// }
 
 	/**
 	 * Create the frame.

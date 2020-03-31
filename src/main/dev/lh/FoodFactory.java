@@ -1,10 +1,6 @@
 package dev.lh;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Point;
-import java.awt.Rectangle;
+import java.awt.*;
 
 import dev.lh.ui.GameWindow;
 
@@ -227,8 +223,7 @@ public class FoodFactory {
 			case blue:
 				snakeAdditionalLength = 1;
 				break;
-		}// switch
+		}
 		return snakeAdditionalLength;
 	}
-
 }
