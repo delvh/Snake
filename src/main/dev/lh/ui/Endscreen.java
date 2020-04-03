@@ -67,10 +67,11 @@ public class Endscreen extends JDialog {
 		lblDeinPunktestand.setFont(new Font("Times New Roman", Font.PLAIN, 25));
 		contentPanel.add(lblDeinPunktestand, BorderLayout.NORTH);
 
-		Image resultImage = Toolkit.getDefaultToolkit()
-			.getImage(this.getClass()
-				.getResource((score < goodOrBadResult) ? "/Snake/src/main/resources/Try_Again.jpg" : "/Snake/src/main/resources/1211548-200.png"));
-		resultImage.flush();
+//TODO: the display ofthe result image could work, but not guaranteed		
+//		Image resultImage = Toolkit.getDefaultToolkit()
+//			.getImage(this.getClass()
+//				.getResource((score < goodOrBadResult) ? "/Snake/src/main/resources/Try_Again.jpg" : "/Snake/src/main/resources/1211548-200.png"));
+//		resultImage.flush();
 
 		setVisible(true);
 	}
