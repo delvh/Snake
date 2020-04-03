@@ -38,5 +38,4 @@ public class Main {
 	 * @since Snake 1.0
 	 */
 	public static GameWindow getGame() { return game; }
-
 }

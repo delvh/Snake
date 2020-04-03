@@ -7,6 +7,7 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
+import dev.lh.ui.Endscreen;
 import dev.lh.ui.GameWindow;
 
 /**
@@ -51,10 +52,11 @@ public class Snake implements Updateable {
 		Down;
 	}
 
+	private static FoodFactory	foodFactory	= FoodFactory.getInstance();
+	private static Endscreen	endscreen;
 	private Direction			Richtung;
 	private int					length;
 	private List<Point>			tiles		= new ArrayList<>();
-	private static FoodFactory	foodFactory	= FoodFactory.getInstance();
 	private final int			snakeSize	= 10;
 
 	/**
@@ -65,18 +67,16 @@ public class Snake implements Updateable {
 	 */
 	public Snake(int length) {
 		this.length	= length;
-		Richtung	= Direction.Left;
-
+		Richtung	= Direction.Right;
+		// adding the initial tiles of the snake
 		for (int i = 0; i < length; i++)
-			tiles.add(new Point(320 - 50 * i, 240));
-
-	}// End Constructor
+			tiles.add(new Point(320 - snakeSize * i, 240));
+	}
 
 	@Override
 	public void nextFrame() {
 		int velX = 0, velY = 0;
 		switch (Richtung) {
-
 			case Up:
 				velY = -snakeSize;
 				break;
@@ -89,7 +89,7 @@ public class Snake implements Updateable {
 			case Right:
 				velX = snakeSize;
 				break;
-		}// switch
+		}
 		Point next = (Point) tiles.get(0).clone(), cur;
 		tiles.get(0).x	+= velX;
 		tiles.get(0).y	+= velY;
@@ -98,24 +98,51 @@ public class Snake implements Updateable {
 			cur = tiles.get(i);
 			tiles.set(i, (Point) next.clone());
 			next = cur;
-		} // for
-			// if(tiles.get(0).x<=0||tiles.get(0).x>=)
+		}
+
+		// case if snake is outside of the screen or touches itself
+		if (checkSelfCollision()) gameOver();
+		// TODO: the game bounds checking below appears to work on Windows, however throws a NullPointerException on Linux/UNIX systems
+		// if (!Main.getGame().getBounds().contains(tiles.get(0))) gameOver();
+
+		// case if snake eats food
 		if (foodFactory.checkCollision(new Rectangle(tiles.get(0).x, tiles.get(0).y, snakeSize, snakeSize))) {
 			addLength(foodFactory.getAdditionalLength());
 			GameWindow game = Main.getGame();
 			game.newFood();
 		}
+	}
 
-	}// End tick
+	/**
+	 *
+	 * @since Snake 1.1
+	 */
+	private void gameOver() {
+		endscreen = new Endscreen(length);
+		endscreen.setVisible(true);
+		Main.getGame().close();
+	}
+
+	/**
+	 * @return whether the snake collides with itself
+	 * @since Snake 1.1
+	 */
+	private boolean checkSelfCollision() {
+		Point		headIndex	= tiles.get(0);
+		Rectangle	head		= new Rectangle(headIndex.x, headIndex.y, snakeSize, snakeSize);
+		for (int index = 1; index < tiles.size(); index++) {
+			Point bodyIndex = tiles.get(index);
+			if (head.contains(new Rectangle(bodyIndex.x, bodyIndex.y, snakeSize, snakeSize))) return true;
+		}
+		return false;
+	}
 
 	@Override
 	public void render(Graphics g) {
 		g.setColor(Color.green);
-
 		for (int i = 0; i < length; i++)
 			g.fillRect(tiles.get(i).x, tiles.get(i).y, snakeSize, snakeSize);
-
-	}// End render
+	}
 
 	/**
 	 * @return the current {@link Direction} of the snake

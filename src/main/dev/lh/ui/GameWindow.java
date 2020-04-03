@@ -1,10 +1,6 @@
 package dev.lh.ui;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Rectangle;
-import java.awt.Toolkit;
+import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -44,7 +40,7 @@ public class GameWindow extends JFrame {
 		setMinimumSize(size);
 		setPreferredSize(size);
 		setMaximumSize(size);
-		setExtendedState(JFrame.MAXIMIZED_BOTH);
+		setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
 		setResizable(false);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
@@ -89,7 +85,7 @@ public class GameWindow extends JFrame {
 		});
 
 		Timer timer = new Timer(50,
-				(evt) -> { s.nextFrame(); if (System.currentTimeMillis() >= foodFactory.getTimeOfNextFood()) newFood(); repaint(); });
+				evt -> { s.nextFrame(); if (System.currentTimeMillis() >= foodFactory.getTimeOfNextFood()) newFood(); repaint(); });
 		timer.start();
 
 		setVisible(true);
@@ -102,7 +98,7 @@ public class GameWindow extends JFrame {
 	 */
 	public void newFood() {
 		foodFactory.generateFood();
-		foodFactory.generateFoodLocation(super.getWidth(), super.getHeight());
+		foodFactory.generateFoodLocation(getWidth(), getHeight());
 		repaint();
 	}
 
