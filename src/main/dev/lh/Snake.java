@@ -102,6 +102,7 @@ public class Snake implements Updateable {
 
 		// case if snake is outside of the screen or touches itself
 		if (checkSelfCollision()) gameOver();
+		// TODO: the game bounds checking below appears to work on Windows, however throws a NullPointerException on Linux/UNIX systems
 		// if (!Main.getGame().getBounds().contains(tiles.get(0))) gameOver();
 
 		// case if snake eats food
