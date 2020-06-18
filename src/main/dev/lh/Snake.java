@@ -73,6 +73,49 @@ public class Snake implements Updateable {
 			tiles.add(new Point(320 - snakeSize * i, 240));
 	}
 
+	/**
+	 * Adds the given length to the current snake object
+	 *
+	 * @param additional the number of tiles to add
+	 * @since Snake 1.0
+	 */
+	public void addLength(int additional) {
+		Point last = tiles.get(tiles.size() - 1);
+		for (int i = 0; i < additional; i++)
+			tiles.add(last);
+		length += additional;
+	}
+
+	/**
+	 * @return whether the snake collides with itself
+	 * @since Snake 1.1
+	 */
+	private boolean checkSelfCollision() {
+		Point		headIndex	= tiles.get(0);
+		Rectangle	head		= new Rectangle(headIndex.x, headIndex.y, snakeSize, snakeSize);
+		for (int index = 1; index < tiles.size(); index++) {
+			Point bodyIndex = tiles.get(index);
+			if (head.contains(new Rectangle(bodyIndex.x, bodyIndex.y, snakeSize, snakeSize))) return true;
+		}
+		return false;
+	}
+
+	/**
+	 *
+	 * @since Snake 1.1
+	 */
+	private void gameOver() {
+		endscreen = new Endscreen(length);
+		endscreen.setVisible(true);
+		Main.getGame().close();
+	}
+
+	/**
+	 * @return the current {@link Direction} of the snake
+	 * @since Snake 1.0
+	 */
+	public Direction getRichtung() { return Richtung; }
+
 	@Override
 	public void nextFrame() {
 		int velX = 0, velY = 0;
@@ -101,9 +144,18 @@ public class Snake implements Updateable {
 		}
 
 		// case if snake is outside of the screen or touches itself
-		if (checkSelfCollision()) gameOver();
-		// TODO: the game bounds checking below appears to work on Windows, however throws a NullPointerException on Linux/UNIX systems
-		// if (!Main.getGame().getBounds().contains(tiles.get(0))) gameOver();
+		if (checkSelfCollision()) {
+			gameOver();
+			System.out.println("Snake collided with itself.");
+			return;
+		}
+		// TODO: the game bounds checking below appears to work on Windows, however
+		// throws a NullPointerException on Linux/UNIX systems
+		if (!Main.getGame().getBounds().contains(tiles.get(0))) {
+			gameOver();
+			System.out.println("Snake went out of bounds.");
+			return;
+		}
 
 		// case if snake eats food
 		if (foodFactory.checkCollision(new Rectangle(tiles.get(0).x, tiles.get(0).y, snakeSize, snakeSize))) {
@@ -111,30 +163,6 @@ public class Snake implements Updateable {
 			GameWindow game = Main.getGame();
 			game.newFood();
 		}
-	}
-
-	/**
-	 *
-	 * @since Snake 1.1
-	 */
-	private void gameOver() {
-		endscreen = new Endscreen(length);
-		endscreen.setVisible(true);
-		Main.getGame().close();
-	}
-
-	/**
-	 * @return whether the snake collides with itself
-	 * @since Snake 1.1
-	 */
-	private boolean checkSelfCollision() {
-		Point		headIndex	= tiles.get(0);
-		Rectangle	head		= new Rectangle(headIndex.x, headIndex.y, snakeSize, snakeSize);
-		for (int index = 1; index < tiles.size(); index++) {
-			Point bodyIndex = tiles.get(index);
-			if (head.contains(new Rectangle(bodyIndex.x, bodyIndex.y, snakeSize, snakeSize))) return true;
-		}
-		return false;
 	}
 
 	@Override
@@ -145,27 +173,8 @@ public class Snake implements Updateable {
 	}
 
 	/**
-	 * @return the current {@link Direction} of the snake
-	 * @since Snake 1.0
-	 */
-	public Direction getRichtung() { return Richtung; }
-
-	/**
 	 * @param richtung the new {@link Direction} of the snake
 	 * @since Snake 1.0
 	 */
 	public void setRichtung(Direction richtung) { Richtung = richtung; }
-
-	/**
-	 * Adds the given length to the current snake object
-	 *
-	 * @param additional the number of tiles to add
-	 * @since Snake 1.0
-	 */
-	public void addLength(int additional) {
-		Point last = tiles.get(tiles.size() - 1);
-		for (int i = 0; i < additional; i++)
-			tiles.add(last);
-		length += additional;
-	}
 }

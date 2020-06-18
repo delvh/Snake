@@ -20,9 +20,9 @@ public class Endscreen extends JDialog {
 
 	private static final long serialVersionUID = -4457484397259161063L;
 
-	private final JPanel		contentPanel	= new JPanel();
-	private int					score			= 0;
 	private static final int	goodOrBadResult	= 200;
+	private final JPanel		contentPanel	= new JPanel();
+	private final int			score;
 
 	/**
 	 * Create the dialog.
@@ -32,14 +32,13 @@ public class Endscreen extends JDialog {
 	public Endscreen(int score) {
 		this.score = score;
 		try {
-			// readInHighscoresPoints();
-			// readInHighscoresPlayers();
 
 			setTitle("Endscreen");
-			setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			setBounds(100, 100, 700, 700);
 			getContentPane().setLayout(new BorderLayout());
 			contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+			contentPanel.setLayout(new BorderLayout(0, 0));
 			getContentPane().add(contentPanel, BorderLayout.CENTER);
 			addWindowListener(new java.awt.event.WindowAdapter() {
 
@@ -49,31 +48,24 @@ public class Endscreen extends JDialog {
 					System.exit(0);
 				}
 			});
+
+			JButton btnNewButton = new JButton("Play again");
+			btnNewButton.setMnemonic(KeyEvent.VK_ENTER);
+			btnNewButton.addActionListener(e -> { Main.startGame(); dispose(); });
+			btnNewButton.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+			contentPanel.add(btnNewButton, BorderLayout.SOUTH);
+
+			JLabel lblDeinPunktestand = new JLabel("Dein Punktestand:	     " + String.valueOf(score));
+			lblDeinPunktestand.setFont(new Font("Times New Roman", Font.PLAIN, 25));
+			contentPanel.add(lblDeinPunktestand, BorderLayout.NORTH);
+
+			Image resultImage = Toolkit.getDefaultToolkit()
+				.getImage(this.getClass().getResource((score < goodOrBadResult) ? "/Try_Again.jpg" : "/1211548-200.png"));
+			resultImage.flush();
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		JButton btnNewButton = new JButton("Play again");
-		btnNewButton.setMnemonic(KeyEvent.VK_ENTER);
-		btnNewButton.addActionListener(e -> { Main.startGame(); dispose(); });
-		contentPanel.setLayout(new BorderLayout(0, 0));
-		// btnNewButton.setIcon(new
-		// ImageIcon(ClassLoader.getSystemResource("/com/sun/javafx/webkit/prism/resources/mediaPlayDisabled.png")));
-		btnNewButton.setIconTextGap(5);
-		btnNewButton.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-		contentPanel.add(btnNewButton, BorderLayout.SOUTH);
-
-		JLabel lblDeinPunktestand = new JLabel("Dein Punktestand:	     " + String.valueOf(score));
-		lblDeinPunktestand.setFont(new Font("Times New Roman", Font.PLAIN, 25));
-		contentPanel.add(lblDeinPunktestand, BorderLayout.NORTH);
-
-//TODO: the display ofthe result image could work, but not guaranteed		
-//		Image resultImage = Toolkit.getDefaultToolkit()
-//			.getImage(this.getClass()
-//				.getResource((score < goodOrBadResult) ? "/Snake/src/main/resources/Try_Again.jpg" : "/Snake/src/main/resources/1211548-200.png"));
-//		resultImage.flush();
-
-		setVisible(true);
 	}
 
 	/**
@@ -81,10 +73,4 @@ public class Endscreen extends JDialog {
 	 * @since Snake 1.0
 	 */
 	public int getScore() { return score; }
-
-	/**
-	 * @param score the new highscore
-	 * @since Snake 1.0
-	 */
-	public void setScore(int score) { this.score = score; }
 }
