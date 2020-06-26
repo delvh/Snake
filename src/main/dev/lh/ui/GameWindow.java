@@ -25,6 +25,7 @@ public class GameWindow extends JFrame {
 	private static final long	serialVersionUID	= 1L;
 	private Snake				s					= new Snake(7);
 	private FoodFactory			foodFactory			= FoodFactory.getInstance();
+	private Timer timer;
 
 	/**
 	 * @param title the title of the frame
@@ -84,7 +85,8 @@ public class GameWindow extends JFrame {
 			}
 		});
 
-		Timer timer = new Timer(50,
+		timer = new Timer(
+			50,
 				evt -> { s.nextFrame(); if (System.currentTimeMillis() >= foodFactory.getTimeOfNextFood()) newFood(); repaint(); });
 		timer.start();
 
@@ -107,5 +109,8 @@ public class GameWindow extends JFrame {
 	 *
 	 * @since Snake 1.1
 	 */
-	public void close() { dispose(); }
+	public void close() {
+		timer.stop();
+		dispose();
+	}
 }
