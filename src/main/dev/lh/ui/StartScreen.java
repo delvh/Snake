@@ -4,7 +4,9 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.KeyEvent;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import dev.lh.Main;
@@ -59,10 +61,9 @@ public class StartScreen extends JFrame {
 
 			JButton buPlay = new JButton("Start Game");
 			buPlay.setBounds(158, 197, 190, 131);
-			buPlay.setIcon(new ImageIcon(StartScreen.class.getResource("/com/sun/javafx/webkit/prism/resources/mediaPlayDisabled.png")));
+			buPlay.setText("Play");
 			buPlay.setMnemonic(KeyEvent.VK_ENTER);
 			buPlay.setFont(new Font("Times New Roman", Font.PLAIN, 16));
-
 			buPlay.addActionListener(a -> {
 
 				Main.startGame();
@@ -70,6 +71,7 @@ public class StartScreen extends JFrame {
 				dispose();
 				System.gc();
 			});
+			contentPane.add(buPlay);
 			contentPane.setLayout(null);
 
 		} catch (Exception e) {
