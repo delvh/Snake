@@ -40,14 +40,6 @@ public class Endscreen extends JDialog {
 			contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 			contentPanel.setLayout(new BorderLayout(0, 0));
 			getContentPane().add(contentPanel, BorderLayout.CENTER);
-			addWindowListener(new java.awt.event.WindowAdapter() {
-
-				@Override
-				public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-					Thread.getAllStackTraces().forEach((thread, stackTraceElement) -> thread.interrupt());
-					System.exit(0);
-				}
-			});
 
 			JButton btnNewButton = new JButton("Play again");
 			btnNewButton.setMnemonic(KeyEvent.VK_ENTER);
