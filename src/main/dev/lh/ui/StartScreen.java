@@ -61,7 +61,7 @@ public class StartScreen extends JFrame {
 
 			JButton buPlay = new JButton("Start Game");
 			buPlay.setBounds(158, 197, 190, 131);
-			buPlay.setText("Play");
+			buPlay.setText("Play Again");
 			buPlay.setMnemonic(KeyEvent.VK_ENTER);
 			buPlay.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 			buPlay.addActionListener(a -> {
