@@ -54,7 +54,6 @@ public class Endscreen extends JDialog {
 			Image resultImage = Toolkit.getDefaultToolkit()
 				.getImage(this.getClass().getResource((score < goodOrBadResult) ? "/Try_Again.jpg" : "/1211548-200.png"));
 			resultImage.flush();
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -25,7 +25,7 @@ public class StartScreen extends JFrame {
 	private JPanel				contentPane;
 
 	/**
-	 * closes the application.
+	 * Closes the application.
 	 */
 	public static void close() { System.exit(0); }
 
@@ -36,14 +36,7 @@ public class StartScreen extends JFrame {
 	 * @since Snake 1.0
 	 */
 	public static void main(String[] args) {
-		EventQueue.invokeLater(() -> {
-			try {
-				StartScreen frame = new StartScreen();
-				frame.setVisible(true);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		});
+		EventQueue.invokeLater(StartScreen::new);
 	}
 
 	/**
@@ -65,7 +58,6 @@ public class StartScreen extends JFrame {
 			buPlay.setMnemonic(KeyEvent.VK_ENTER);
 			buPlay.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 			buPlay.addActionListener(a -> {
-
 				Main.startGame();
 				setVisible(false);
 				dispose();
@@ -73,9 +65,8 @@ public class StartScreen extends JFrame {
 			});
 			contentPane.add(buPlay);
 			contentPane.setLayout(null);
-
+			setVisible(true);
 		} catch (Exception e) {
-
 			e.printStackTrace();
 		}
 	}
