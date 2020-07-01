@@ -1,6 +1,7 @@
 package dev.lh;
 
 import java.awt.*;
+import java.util.Random;
 
 import dev.lh.ui.GameWindow;
 
@@ -56,7 +57,7 @@ public class FoodFactory {
 
 	private long timeOfNextFood;
 
-	Point pFood = null;
+	private Point pFood;
 
 	private Food nextFood = Food.white;
 
@@ -75,27 +76,7 @@ public class FoodFactory {
 	 * @since Snake 1.0
 	 */
 	public Food generateFood() {
-		int nextFoodIs = (int) Math.floor(Math.random() * 5);
-		switch (nextFoodIs) {
-
-			case 0:
-				nextFood = Food.white;
-				break;
-			case 1:
-				nextFood = Food.yellow;
-				break;
-			case 2:
-				nextFood = Food.orange;
-				break;
-			case 3:
-				nextFood = Food.red;
-				break;
-			case 4:
-				nextFood = Food.blue;
-				break;
-			default:
-				nextFood = generateFood();
-		}
+		nextFood = Food.values()[new Random().nextInt(Food.values().length)];
 		rectangleSize = nextFood.ordinal() + 2;
 		setTimeToNextFoodMillis();
 		return nextFood;
@@ -107,7 +88,9 @@ public class FoodFactory {
 	 *
 	 * @since Snake 1.0
 	 */
-	public void setTimeToNextFoodMillis() { timeOfNextFood = System.currentTimeMillis() + (int) Math.round(Math.random() * 15000 + 1000); }
+	public void setTimeToNextFoodMillis() {
+		timeOfNextFood = System.currentTimeMillis() + new Random().nextInt(15000) + 1000;
+	}
 
 	/**
 	 * @return the type of the next food
@@ -134,12 +117,9 @@ public class FoodFactory {
 	 * @since Snake 1.0
 	 */
 	public Point generateFoodLocation(int width, int height) {
-		pFood = new Point((int) Math.round(Math.random() * width), (int) Math.round(Math.random() * height));
-		if (pFood.x < 50 || pFood.x > width - 50 || pFood.y < 50 || pFood.y > height - 50) {
-			pFood.x	= (pFood.x < 50) ? 50 : (pFood.x > width - 50) ? width - 50 : pFood.x;
-			pFood.y	= (pFood.y < 50) ? 50 : (pFood.y > height - 50) ? height - 50 : pFood.y;
-		}
-		return pFood;
+		assert (width > 100 && height > 100);
+		Random r = new Random();
+		return pFood = new Point(r.nextInt(width - 100) + 50, r.nextInt(height - 100) + 50);
 	}
 
 	/**
@@ -178,7 +158,7 @@ public class FoodFactory {
 			case blue:
 				g.setColor(Color.blue);
 				break;
-		}// switch
+		}
 	}
 
 	/**

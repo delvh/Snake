@@ -33,7 +33,6 @@ public class GameWindow extends JFrame {
 	 */
 	public GameWindow(String title) {
 		super(title);
-		newFood();
 		Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
 		setBounds(new Rectangle(size));
 		setLocation(0, 0);
@@ -67,41 +66,47 @@ public class GameWindow extends JFrame {
 				switch (e.getKeyCode()) {
 					case KeyEvent.VK_W:
 					case KeyEvent.VK_UP:
-						if (!s.getRichtung().equals(Direction.Down)) s.setRichtung(Direction.Up);
+						if (!s.getRichtung().equals(Direction.Down)) s.setDirection(Direction.Up);
 						break;
 					case KeyEvent.VK_A:
 					case KeyEvent.VK_LEFT:
-						if (!s.getRichtung().equals(Direction.Right)) s.setRichtung(Direction.Left);
+						if (!s.getRichtung().equals(Direction.Right)) s.setDirection(Direction.Left);
 						break;
 					case KeyEvent.VK_S:
 					case KeyEvent.VK_DOWN:
-						if (!s.getRichtung().equals(Direction.Up)) s.setRichtung(Direction.Down);
+						if (!s.getRichtung().equals(Direction.Up)) s.setDirection(Direction.Down);
 						break;
 					case KeyEvent.VK_D:
 					case KeyEvent.VK_RIGHT:
-						if (!s.getRichtung().equals(Direction.Left)) s.setRichtung(Direction.Right);
+						if (!s.getRichtung().equals(Direction.Left)) s.setDirection(Direction.Right);
 						break;
 				}
 			}
 		});
 
+		newFood();
 		timer = new Timer(
 			50,
-				evt -> { s.nextFrame(); if (System.currentTimeMillis() >= foodFactory.getTimeOfNextFood()) newFood(); repaint(); });
+			evt -> {
+				s.nextFrame();
+					if (System.currentTimeMillis() >= foodFactory.getTimeOfNextFood())
+					newFood();
+				repaint();
+			}
+		);
 		timer.start();
 
 		setVisible(true);
 	}
 
 	/**
-	 * Generates new food
+	 * Generates new food.
 	 *
 	 * @since Snake 1.1
 	 */
 	public void newFood() {
 		foodFactory.generateFood();
 		foodFactory.generateFoodLocation(getWidth(), getHeight());
-		repaint();
 	}
 
 	/**

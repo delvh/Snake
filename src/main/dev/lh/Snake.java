@@ -1,9 +1,6 @@
 package dev.lh;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Point;
-import java.awt.Rectangle;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,7 +51,7 @@ public class Snake implements Updateable {
 
 	private static FoodFactory	foodFactory	= FoodFactory.getInstance();
 	private static Endscreen	endscreen;
-	private Direction			Richtung;
+	private Direction			direction;
 	private int					length;
 	private List<Point>			tiles		= new ArrayList<>();
 	private final int			snakeSize	= 10;
@@ -67,7 +64,7 @@ public class Snake implements Updateable {
 	 */
 	public Snake(int length) {
 		this.length	= length;
-		Richtung	= Direction.Right;
+		direction	= Direction.Right;
 		// adding the initial tiles of the snake
 		for (int i = 0; i < length; i++)
 			tiles.add(new Point(320 - snakeSize * i, 240));
@@ -114,12 +111,12 @@ public class Snake implements Updateable {
 	 * @return the current {@link Direction} of the snake
 	 * @since Snake 1.0
 	 */
-	public Direction getRichtung() { return Richtung; }
+	public Direction getRichtung() { return direction; }
 
 	@Override
 	public void nextFrame() {
 		int velX = 0, velY = 0;
-		switch (Richtung) {
+		switch (direction) {
 			case Up:
 				velY = -snakeSize;
 				break;
@@ -173,8 +170,8 @@ public class Snake implements Updateable {
 	}
 
 	/**
-	 * @param richtung the new {@link Direction} of the snake
+	 * @param direction the new {@link Direction} of the snake
 	 * @since Snake 1.0
 	 */
-	public void setRichtung(Direction richtung) { Richtung = richtung; }
+	public void setDirection(Direction direction) { this.direction = direction; }
 }
