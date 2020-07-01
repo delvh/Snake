@@ -1,11 +1,12 @@
 package dev.lh;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
 import dev.lh.ui.Endscreen;
-import dev.lh.ui.GameWindow;
 
 /**
  * Project: <strong>Snake</strong><br>
@@ -31,30 +32,30 @@ public class Snake implements Updateable {
 		/**
 		 * Use if the snake should head left.
 		 */
-		Left,
+		LEFT,
 
 		/**
 		 * Use if the snake should head right.
 		 */
-		Right,
+		RIGHT,
 
 		/**
 		 * Use if the snake should head up.
 		 */
-		Up,
+		UP,
 
 		/**
 		 * Use if the snake should head down.
 		 */
-		Down;
+		DOWN;
 	}
 
-	private static FoodFactory	foodFactory	= FoodFactory.getInstance();
-	private static Endscreen	endscreen;
-	private Direction			direction;
-	private int					length;
-	private List<Point>			tiles		= new ArrayList<>();
-	private final int			snakeSize	= 10;
+	private static Endscreen endscreen;
+	private Direction direction = Direction.RIGHT;
+	private int length;
+	private List<Rectangle> tiles = new ArrayList<>();
+
+	private static final int TILE_SIZE = 10;
 
 	/**
 	 * Constructs a new Snake with the given length in tiles.
@@ -63,21 +64,21 @@ public class Snake implements Updateable {
 	 * @since Snake 1.0
 	 */
 	public Snake(int length) {
-		this.length	= length;
-		direction	= Direction.Right;
-		// adding the initial tiles of the snake
+		this.length = length;
+
+		// Add initial tiles
 		for (int i = 0; i < length; i++)
-			tiles.add(new Point(320 - snakeSize * i, 240));
+			tiles.add(new Rectangle(320 - TILE_SIZE * i, 240, TILE_SIZE, TILE_SIZE));
 	}
 
 	/**
-	 * Adds the given length to the current snake object
+	 * Increases the given length to the current snake object.
 	 *
 	 * @param additional the number of tiles to add
 	 * @since Snake 1.0
 	 */
 	public void addLength(int additional) {
-		Point last = tiles.get(tiles.size() - 1);
+		Rectangle last = tiles.get(tiles.size() - 1);
 		for (int i = 0; i < additional; i++)
 			tiles.add(last);
 		length += additional;
@@ -88,17 +89,10 @@ public class Snake implements Updateable {
 	 * @since Snake 1.1
 	 */
 	private boolean checkSelfCollision() {
-		Point		headIndex	= tiles.get(0);
-		Rectangle	head		= new Rectangle(headIndex.x, headIndex.y, snakeSize, snakeSize);
-		for (int index = 1; index < tiles.size(); index++) {
-			Point bodyIndex = tiles.get(index);
-			if (head.contains(new Rectangle(bodyIndex.x, bodyIndex.y, snakeSize, snakeSize))) return true;
-		}
-		return false;
+		return tiles.stream().skip(1).anyMatch(tiles.get(0)::contains);
 	}
 
 	/**
-	 *
 	 * @since Snake 1.1
 	 */
 	private void gameOver() {
@@ -107,71 +101,65 @@ public class Snake implements Updateable {
 		Main.getGame().close();
 	}
 
-	/**
-	 * @return the current {@link Direction} of the snake
-	 * @since Snake 1.0
-	 */
-	public Direction getRichtung() { return direction; }
-
 	@Override
-	public void nextFrame() {
+	public void tick() {
 		int velX = 0, velY = 0;
 		switch (direction) {
-			case Up:
-				velY = -snakeSize;
+			case UP:
+				velY = -TILE_SIZE;
 				break;
-			case Down:
-				velY = snakeSize;
+			case DOWN:
+				velY = TILE_SIZE;
 				break;
-			case Left:
-				velX = -snakeSize;
+			case LEFT:
+				velX = -TILE_SIZE;
 				break;
-			case Right:
-				velX = snakeSize;
+			case RIGHT:
+				velX = TILE_SIZE;
 				break;
 		}
-		Point next = (Point) tiles.get(0).clone(), cur;
-		tiles.get(0).x	+= velX;
-		tiles.get(0).y	+= velY;
-
-		for (int i = 1; i < length; i++) {
-			cur = tiles.get(i);
-			tiles.set(i, (Point) next.clone());
-			next = cur;
-		}
-
-		// case if snake is outside of the screen or touches itself
+		// Add a new tile at the front
+		tiles.add(
+			0,
+			new Rectangle(tiles.get(0).x + velX, tiles.get(0).y + velY, TILE_SIZE, TILE_SIZE)
+		);
+		// Remove the last tile
+		tiles.remove(tiles.size() - 1);
+		// Case if snake is outside of the screen or touches itself
 		if (checkSelfCollision()) {
 			gameOver();
 			System.out.println("Snake collided with itself.");
 			return;
 		}
-		// TODO: the game bounds checking below appears to work on Windows, however
-		// throws a NullPointerException on Linux/UNIX systems
-		if (!Main.getGame().getBounds().contains(tiles.get(0))) {
+		// TODO: Test on Linux
+		if (!Main.getGame().getBounds().contains(getHead())) {
 			gameOver();
 			System.out.println("Snake went out of bounds.");
 			return;
 		}
-
-		// case if snake eats food
-		if (foodFactory.checkCollision(new Rectangle(tiles.get(0).x, tiles.get(0).y, snakeSize, snakeSize))) {
-			addLength(foodFactory.getAdditionalLength());
-			GameWindow game = Main.getGame();
-			game.newFood();
-		}
 	}
 
 	@Override
-	public void render(Graphics g) {
+	public void render(Graphics2D g) {
 		g.setColor(Color.green);
-		for (int i = 0; i < length; i++)
-			g.fillRect(tiles.get(i).x, tiles.get(i).y, snakeSize, snakeSize);
+		tiles.forEach(g::fill);
 	}
+
+	/**
+	 * @return the current {@link Direction} of the snake
+	 * @since Snake 1.2
+	 */
+	public Direction getDirection() { return direction; }
 
 	/**
 	 * @param direction the new {@link Direction} of the snake
 	 * @since Snake 1.0
 	 */
 	public void setDirection(Direction direction) { this.direction = direction; }
+
+	/**
+	 * @return a rectangle representing the head of the snake
+	 * @since Snake 1.2
+	 */
+	public Rectangle getHead() { return tiles.get(0); }
 }

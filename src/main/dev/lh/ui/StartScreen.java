@@ -21,13 +21,14 @@ import dev.lh.Main;
  */
 public class StartScreen extends JFrame {
 
-	private static final long	serialVersionUID	= 6055940532003735543L;
-	private JPanel				contentPane;
+	private static final long serialVersionUID = 6055940532003735543L;
 
 	/**
 	 * Closes the application.
 	 */
-	public static void close() { System.exit(0); }
+	public static void close() {
+		System.exit(0);
+	}
 
 	/**
 	 * Launches Snake.
@@ -43,31 +44,27 @@ public class StartScreen extends JFrame {
 	 * Create the frame.
 	 */
 	public StartScreen() {
-		try {
-			// readInHighscores();
-			setTitle("Snake - Startscreen");
-			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			setBounds(500, 200, 550, 550);
-			contentPane = new JPanel();
-			contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-			setContentPane(contentPane);
+		setTitle("Snake - Startscreen");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(500, 200, 550, 550);
 
-			JButton buPlay = new JButton("Start Game");
-			buPlay.setBounds(158, 197, 190, 131);
-			buPlay.setText("Play Again");
-			buPlay.setMnemonic(KeyEvent.VK_ENTER);
-			buPlay.setFont(new Font("Times New Roman", Font.PLAIN, 16));
-			buPlay.addActionListener(a -> {
-				Main.startGame();
-				setVisible(false);
-				dispose();
-				System.gc();
-			});
-			contentPane.add(buPlay);
-			contentPane.setLayout(null);
-			setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		JPanel contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+
+		JButton buPlay = new JButton("Start Game");
+		buPlay.setBounds(158, 197, 190, 131);
+		buPlay.setText("Play Again");
+		buPlay.setMnemonic(KeyEvent.VK_ENTER);
+		buPlay.setFont(new Font("Times New Roman", Font.PLAIN, 16));
+		buPlay.addActionListener(a -> {
+			Main.startGame();
+			setVisible(false);
+			dispose();
+			System.gc();
+		});
+		contentPane.add(buPlay);
+		contentPane.setLayout(null);
+		setVisible(true);
 	}
 }
