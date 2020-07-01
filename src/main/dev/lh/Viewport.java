@@ -12,7 +12,7 @@ import java.util.TimerTask;
  * Project: <strong>Snake</strong><br>
  * File: <strong>Viewport.java</strong><br>
  * Created: <strong>01.07.2020</strong><br>
- * 
+ *
  * @author Kai S. K. Engelbart
  * @since Snake 1.2
  */
@@ -42,24 +42,22 @@ public class Viewport extends Canvas {
 
 	/**
 	 * Starts the render task.
-	 * 
+	 *
 	 * @since Snake 1.2
 	 */
 	public void start() {
-		if (renderTask != null)
-			renderTask.cancel();
-		else
-			createBufferStrategy(2);
+		if (renderTask != null) renderTask.cancel();
+		else createBufferStrategy(2);
 
 		renderTask = new TimerTask() {
 
-			private long lastTime = System.currentTimeMillis();
+			// private long lastTime = System.currentTimeMillis();
 
 			@Override
 			public void run() {
-				long time = System.currentTimeMillis();
-				double dt = (time - lastTime) * 1E-3;
-				lastTime = time;
+				// final long time = System.currentTimeMillis();
+				// final double dt = (time - lastTime) * 1E-3;
+				// lastTime = time;
 				// TODO: Delta time adjustment
 				gameRoot.tick();
 				render();
@@ -71,15 +69,13 @@ public class Viewport extends Canvas {
 
 	/**
 	 * Stops the render task.
-	 * 
+	 *
 	 * @since Snake 1.2
 	 */
-	public void stop() {
-		renderTask.cancel();
-	}
+	public void stop() { renderTask.cancel(); }
 
 	private void render() {
-		Graphics2D g = (Graphics2D) getBufferStrategy().getDrawGraphics();
+		final Graphics2D g = (Graphics2D) getBufferStrategy().getDrawGraphics();
 
 		// Clear the screen
 		g.setColor(Color.BLACK);

@@ -32,31 +32,25 @@ public class Endscreen extends JDialog {
 	public Endscreen(int score) {
 		this.score = score;
 		setTitle("Endscreen");
-		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 700, 700);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPanel.setLayout(new BorderLayout(0, 0));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 
-		JButton btnNewButton = new JButton("Play again");
+		final JButton btnNewButton = new JButton("Play again");
 		btnNewButton.setMnemonic(KeyEvent.VK_ENTER);
-		btnNewButton.addActionListener(e -> {
-			Main.startGame();
-			dispose();
-		});
+		btnNewButton.addActionListener(e -> { Main.startGame(); dispose(); });
 		btnNewButton.setFont(new Font("Times New Roman", Font.PLAIN, 15));
 		contentPanel.add(btnNewButton, BorderLayout.SOUTH);
 
-		JLabel lblDeinPunktestand = new JLabel("Dein Punktestand:	     " + String.valueOf(score));
+		final JLabel lblDeinPunktestand = new JLabel("Dein Punktestand:	     " + String.valueOf(score));
 		lblDeinPunktestand.setFont(new Font("Times New Roman", Font.PLAIN, 25));
 		contentPanel.add(lblDeinPunktestand, BorderLayout.NORTH);
 
-		Image resultImage = Toolkit.getDefaultToolkit()
-			.getImage(
-				this.getClass()
-					.getResource((score < goodOrBadResult) ? "/Try_Again.jpg" : "/1211548-200.png")
-			);
+		final Image resultImage = Toolkit.getDefaultToolkit()
+			.getImage(this.getClass().getResource(score < goodOrBadResult ? "/Try_Again.jpg" : "/1211548-200.png"));
 		resultImage.flush();
 	}
 
