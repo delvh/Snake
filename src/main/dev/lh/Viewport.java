@@ -60,7 +60,7 @@ public class Viewport extends Canvas {
 				long time = System.currentTimeMillis();
 				double dt = (time - lastTime) * 1E-3;
 				lastTime = time;
-
+				// TODO: Delta time adjustment
 				gameRoot.tick();
 				render();
 			}

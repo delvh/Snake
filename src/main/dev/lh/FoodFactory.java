@@ -55,8 +55,8 @@ public final class FoodFactory {
 			FOOD_LENGTH_BONUSES[seed],
 			new Rectangle(random.nextInt(width - 100) + 50,
 				random.nextInt(height - 100) + 50,
-				seed * 10,
-				seed * 10
+				10 + seed * 5,
+				10 + seed * 5
 			)
 		);
 	}

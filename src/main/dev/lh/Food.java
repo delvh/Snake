@@ -5,6 +5,8 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
 /**
+ * Represents a food item.
+ * <p>
  * Project: <strong>Snake</strong><br>
  * File: <strong>Food.java</strong><br>
  * Created: <strong>01.07.2020</strong><br>
@@ -18,14 +20,18 @@ public final class Food implements Updateable {
 	private final int lengthBonus;
 	private final Rectangle bounds;
 
+	/**
+	 * Constructs a food item.
+	 * 
+	 * @param color       the color of the food item
+	 * @param lengthBonus the length added to the snake when the food item is eaten
+	 * @param bounds      the bounds of the food item
+	 * @since Snake 1.1
+	 */
 	public Food(Color color, int lengthBonus, Rectangle bounds) {
 		this.color = color;
 		this.lengthBonus = lengthBonus;
 		this.bounds = bounds;
-	}
-
-	public void checkCollision(Snake snake) {
-		if (bounds.intersects(snake.getHead())) {}
 	}
 
 	@Override
@@ -34,7 +40,15 @@ public final class Food implements Updateable {
 		g.fill(bounds);
 	}
 
+	/**
+	 * @return the length added to the snake when the food item is eaten
+	 * @since Snake 1.1
+	 */
 	public int getLengthBonus() { return lengthBonus; }
 
+	/**
+	 * @return the bounds of the food item
+	 * @since Snake 1.1
+	 */
 	public Rectangle getBounds() { return bounds; }
 }

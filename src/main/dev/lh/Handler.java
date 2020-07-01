@@ -19,6 +19,13 @@ public final class Handler implements Updateable {
 
 	private volatile Food food;
 
+	/**
+	 * Constructs a handler.
+	 * 
+	 * @param snake       the snake
+	 * @param foodFactory the food factory
+	 * @since Snake 1.1
+	 */
 	public Handler(Snake snake, FoodFactory foodFactory) {
 		this.snake = snake;
 		this.foodFactory = foodFactory;
@@ -29,6 +36,7 @@ public final class Handler implements Updateable {
 	public void tick() {
 		snake.tick();
 		food.tick();
+
 		// Check for food collision
 		if (snake.getHead().intersects(food.getBounds())) {
 			snake.addLength(food.getLengthBonus());
