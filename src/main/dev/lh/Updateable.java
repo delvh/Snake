@@ -3,8 +3,8 @@ package dev.lh;
 import java.awt.Graphics;
 
 /**
- * This interface contains everything that needs to updated regularly.<br>
- * <br>
+ * This interface contains everything that needs to be updated regularly.
+ * <p>
  * Project: <strong>Snake</strong><br>
  * File: <strong>Updateable.java</strong><br>
  * Created: <strong>11 Mar 2020</strong><br>

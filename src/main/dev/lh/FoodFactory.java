@@ -1,5 +1,7 @@
 package dev.lh;
 
+import static java.awt.Color.*;
+
 import java.awt.*;
 import java.util.Random;
 
@@ -27,30 +29,56 @@ public class FoodFactory {
 	 * @since Snake 1.0
 	 */
 	public static enum Food {
+
 		/**
 		 * Use if white food is wanted.
 		 */
-		white,
+		white(
+			WHITE, 40
+		),
 
 		/**
 		 * Use if yellow food is wanted.
 		 */
-		yellow,
+		yellow(
+			YELLOW, 15
+		),
 
 		/**
 		 * Use if orange food is wanted.
 		 */
-		orange,
+		orange(
+			ORANGE, 6
+		),
 
 		/**
 		 * Use if red food is wanted.
 		 */
-		red,
+		red(
+			RED, 2
+		),
 
 		/**
 		 * Use if blue food is wanted.
 		 */
-		blue
+		blue(
+			BLUE, 1
+		);
+
+		/**
+		 * The color of the food item.
+		 */
+		public final Color color;
+
+		/**
+		 * The length bonus of the food item.
+		 */
+		public final int lengthBonus;
+
+		private Food(Color color, int lengthBonus) {
+			this.color = color;
+			this.lengthBonus = lengthBonus;
+		}
 	}
 
 	private static FoodFactory foodFactory = new FoodFactory();
@@ -142,23 +170,7 @@ public class FoodFactory {
 	 * @since Snake 1.0
 	 */
 	public void colorOfFood(Graphics g) {
-		switch (nextFood) {
-			case white:
-				g.setColor(Color.white);
-				break;
-			case yellow:
-				g.setColor(Color.yellow);
-				break;
-			case orange:
-				g.setColor(Color.orange);
-				break;
-			case red:
-				g.setColor(Color.red);
-				break;
-			case blue:
-				g.setColor(Color.blue);
-				break;
-		}
+		g.setColor(nextFood.color);
 	}
 
 	/**
@@ -172,12 +184,12 @@ public class FoodFactory {
 
 	/**
 	 * @param snakeHead the the head of a {@link Snake} object
-	 * @return true if the current food intersects with the snakehead
+	 * @return true if the current food intersects with the snake head
 	 * @since Snake 1.0
 	 */
 	public boolean checkCollision(Rectangle snakeHead) {
-		int			s		= rectangleSize * 5;
-		Rectangle	food	= new Rectangle(pFood, new Dimension(s, s));
+		int s = rectangleSize * 5;
+		Rectangle food = new Rectangle(pFood, new Dimension(s, s));
 		return food.intersects(snakeHead);
 	}
 
@@ -186,24 +198,6 @@ public class FoodFactory {
 	 * @since Snake 1.0
 	 */
 	public int getAdditionalLength() {
-		int snakeAdditionalLength = 0;
-		switch (nextFood) {
-			case white:
-				snakeAdditionalLength = 40;
-				break;
-			case yellow:
-				snakeAdditionalLength = 15;
-				break;
-			case orange:
-				snakeAdditionalLength = 6;
-				break;
-			case red:
-				snakeAdditionalLength = 2;
-				break;
-			case blue:
-				snakeAdditionalLength = 1;
-				break;
-		}
-		return snakeAdditionalLength;
+		return nextFood.lengthBonus;
 	}
 }
