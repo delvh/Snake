@@ -119,8 +119,7 @@ public class FoodFactory {
 	public Point generateFoodLocation(int width, int height) {
 		assert (width > 100 && height > 100);
 		Random r = new Random();
-		pFood = new Point(r.nextInt(width - 100) + 50, r.nextInt(height - 100) + 50);
-		return pFood;
+		return pFood = new Point(r.nextInt(width - 100) + 50, r.nextInt(height - 100) + 50);
 	}
 
 	/**
