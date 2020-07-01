@@ -52,8 +52,8 @@ public class GameWindow extends JFrame {
 			protected void paintComponent(Graphics g) {
 				super.paintComponent(g);
 				g.setColor(Color.black);
-				g.fillRect(0, 0, super.getWidth(), super.getHeight());
-				s.render(g);
+				g.fillRect(0, 0, getWidth(), getHeight());
+				s.render((Graphics2D) g);
 				foodFactory.paintFood(g);
 			}
 		});
@@ -66,19 +66,19 @@ public class GameWindow extends JFrame {
 				switch (e.getKeyCode()) {
 					case KeyEvent.VK_W:
 					case KeyEvent.VK_UP:
-						if (!s.getRichtung().equals(Direction.Down)) s.setDirection(Direction.Up);
+						if (!s.getRichtung().equals(Direction.DOWN)) s.setDirection(Direction.UP);
 						break;
 					case KeyEvent.VK_A:
 					case KeyEvent.VK_LEFT:
-						if (!s.getRichtung().equals(Direction.Right)) s.setDirection(Direction.Left);
+						if (!s.getRichtung().equals(Direction.RIGHT)) s.setDirection(Direction.LEFT);
 						break;
 					case KeyEvent.VK_S:
 					case KeyEvent.VK_DOWN:
-						if (!s.getRichtung().equals(Direction.Up)) s.setDirection(Direction.Down);
+						if (!s.getRichtung().equals(Direction.UP)) s.setDirection(Direction.DOWN);
 						break;
 					case KeyEvent.VK_D:
 					case KeyEvent.VK_RIGHT:
-						if (!s.getRichtung().equals(Direction.Left)) s.setDirection(Direction.Right);
+						if (!s.getRichtung().equals(Direction.LEFT)) s.setDirection(Direction.RIGHT);
 						break;
 				}
 			}

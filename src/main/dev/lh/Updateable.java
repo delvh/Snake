@@ -1,6 +1,6 @@
 package dev.lh;
 
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 /**
  * This interface contains everything that needs to be updated regularly.
@@ -25,8 +25,8 @@ public interface Updateable {
 	/**
 	 * Renders the object.
 	 *
-	 * @param g the {@link Graphics} object that is used to render this object
+	 * @param g the graphics object that is used to render this object
 	 * @since Snake 1.0
 	 */
-	void render(Graphics g);
+	void render(Graphics2D g);
 }

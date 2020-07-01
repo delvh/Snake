@@ -28,7 +28,7 @@ public class FoodFactory {
 	 * @author Leon Hofmeister
 	 * @since Snake 1.0
 	 */
-	public static enum Food {
+	public enum Food {
 
 		/**
 		 * Use if white food is wanted.
