@@ -14,7 +14,7 @@ import java.util.TimerTask;
  * Created: <strong>01.07.2020</strong><br>
  * 
  * @author Kai S. K. Engelbart
- * @since Snake 1.0
+ * @since Snake 1.2
  */
 public class Viewport extends Canvas {
 
@@ -33,7 +33,7 @@ public class Viewport extends Canvas {
 
 	/**
 	 * @param gameRoot the game object responsible for updating the rest
-	 * @since Snake 1.0
+	 * @since Snake 1.2
 	 */
 	public Viewport(Updateable gameRoot) {
 		this.gameRoot = gameRoot;
@@ -43,7 +43,7 @@ public class Viewport extends Canvas {
 	/**
 	 * Starts the render task.
 	 * 
-	 * @since Snake 1.1
+	 * @since Snake 1.2
 	 */
 	public void start() {
 		if (renderTask != null)
@@ -72,7 +72,7 @@ public class Viewport extends Canvas {
 	/**
 	 * Stops the render task.
 	 * 
-	 * @since Snake 1.1
+	 * @since Snake 1.2
 	 */
 	public void stop() {
 		renderTask.cancel();

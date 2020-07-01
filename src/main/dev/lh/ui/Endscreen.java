@@ -32,7 +32,7 @@ public class Endscreen extends JDialog {
 	public Endscreen(int score) {
 		this.score = score;
 		setTitle("Endscreen");
-		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setBounds(100, 100, 700, 700);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));

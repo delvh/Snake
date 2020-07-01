@@ -147,7 +147,7 @@ public class Snake implements Updateable {
 
 	/**
 	 * @return the current {@link Direction} of the snake
-	 * @since Snake 1.0
+	 * @since Snake 1.2
 	 */
 	public Direction getDirection() { return direction; }
 
@@ -159,7 +159,7 @@ public class Snake implements Updateable {
 
 	/**
 	 * @return a rectangle representing the head of the snake
-	 * @since Snake 1.1
+	 * @since Snake 1.2
 	 */
 	public Rectangle getHead() { return tiles.get(0); }
 }

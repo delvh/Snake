@@ -10,7 +10,7 @@ import java.awt.Graphics2D;
  * Created: <strong>01.07.2020</strong><br>
  * 
  * @author Kai S. K. Engelbart
- * @since Snake 1.1
+ * @since Snake 1.2
  */
 public final class Handler implements Updateable {
 
@@ -24,7 +24,7 @@ public final class Handler implements Updateable {
 	 * 
 	 * @param snake       the snake
 	 * @param foodFactory the food factory
-	 * @since Snake 1.1
+	 * @since Snake 1.2
 	 */
 	public Handler(Snake snake, FoodFactory foodFactory) {
 		this.snake = snake;

@@ -36,7 +36,7 @@ public final class FoodFactory {
 	 * 
 	 * @param width  the width of the viewport
 	 * @param height the height of the viewport
-	 * @since Snake 1.1
+	 * @since Snake 1.2
 	 */
 	public FoodFactory(int width, int height) {
 		this.width = width;
@@ -45,7 +45,7 @@ public final class FoodFactory {
 
 	/**
 	 * @return a new food item
-	 * @since Snake 1.1
+	 * @since Snake 1.2
 	 */
 	public synchronized Food spawn() {
 		nextSpawnTime = System.currentTimeMillis() + random.nextInt(15000) + 1000;
@@ -63,7 +63,7 @@ public final class FoodFactory {
 
 	/**
 	 * @return the time after which a new food item should be spawned
-	 * @since Snake 1.1
+	 * @since Snake 1.2
 	 */
 	public long getNextSpawnTime() { return nextSpawnTime; }
 }

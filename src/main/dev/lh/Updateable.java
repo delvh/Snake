@@ -18,7 +18,7 @@ public interface Updateable {
 	 * Here should the actions be implemented that are supposed to happen when a new
 	 * frame gets created.
 	 *
-	 * @since Snake 1.0
+	 * @since Snake 1.2
 	 */
 	default void tick() {}
 
