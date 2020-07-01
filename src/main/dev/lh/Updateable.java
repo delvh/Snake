@@ -20,7 +20,7 @@ public interface Updateable {
 	 *
 	 * @since Snake 1.0
 	 */
-	void nextFrame();
+	default void tick() {}
 
 	/**
 	 * Renders the object.
@@ -28,5 +28,5 @@ public interface Updateable {
 	 * @param g the graphics object that is used to render this object
 	 * @since Snake 1.0
 	 */
-	void render(Graphics2D g);
+	default void render(Graphics2D g) {}
 }

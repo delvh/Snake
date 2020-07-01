@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dev.lh.ui.Endscreen;
-import dev.lh.ui.GameWindow;
 
 /**
  * Project: <strong>Snake</strong><br>
@@ -51,7 +50,6 @@ public class Snake implements Updateable {
 		DOWN;
 	}
 
-	private static FoodFactory foodFactory = FoodFactory.getInstance();
 	private static Endscreen endscreen;
 	private Direction direction = Direction.RIGHT;
 	private int length;
@@ -103,14 +101,8 @@ public class Snake implements Updateable {
 		Main.getGame().close();
 	}
 
-	/**
-	 * @return the current {@link Direction} of the snake
-	 * @since Snake 1.0
-	 */
-	public Direction getRichtung() { return direction; }
-
 	@Override
-	public void nextFrame() {
+	public void tick() {
 		int velX = 0, velY = 0;
 		switch (direction) {
 			case UP:
@@ -140,17 +132,10 @@ public class Snake implements Updateable {
 			return;
 		}
 		// TODO: Test on Linux
-		if (!Main.getGame().getBounds().contains(tiles.get(0))) {
+		if (!Main.getGame().getBounds().contains(getHead())) {
 			gameOver();
 			System.out.println("Snake went out of bounds.");
 			return;
-		}
-		// TODO: Move to Food class
-		// Case if snake eats food
-		if (foodFactory.checkCollision(tiles.get(0))) {
-			addLength(foodFactory.getAdditionalLength());
-			GameWindow game = Main.getGame();
-			game.newFood();
 		}
 	}
 
@@ -161,8 +146,20 @@ public class Snake implements Updateable {
 	}
 
 	/**
+	 * @return the current {@link Direction} of the snake
+	 * @since Snake 1.0
+	 */
+	public Direction getDirection() { return direction; }
+
+	/**
 	 * @param direction the new {@link Direction} of the snake
 	 * @since Snake 1.0
 	 */
 	public void setDirection(Direction direction) { this.direction = direction; }
+
+	/**
+	 * @return a rectangle representing the head of the snake
+	 * @since Snake 1.1
+	 */
+	public Rectangle getHead() { return tiles.get(0); }
 }
