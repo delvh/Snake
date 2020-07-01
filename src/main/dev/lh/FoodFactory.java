@@ -76,8 +76,7 @@ public class FoodFactory {
 	 * @since Snake 1.0
 	 */
 	public Food generateFood() {
-		int n = new Random().nextInt(Food.values().length + 1);
-		nextFood = n == Food.values().length ? generateFood() : Food.values()[n];
+		nextFood = Food.values()[new Random().nextInt(Food.values().length)];
 		rectangleSize = nextFood.ordinal() + 2;
 		setTimeToNextFoodMillis();
 		return nextFood;
