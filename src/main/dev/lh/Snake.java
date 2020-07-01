@@ -28,7 +28,7 @@ public class Snake implements Updateable {
 	 * @author Leon Hofmeister
 	 * @since Snake 1.0
 	 */
-	public static enum Direction {
+	public enum Direction {
 		/**
 		 * Use if the snake should head left.
 		 */
@@ -50,10 +50,10 @@ public class Snake implements Updateable {
 		DOWN;
 	}
 
-	private static Endscreen endscreen;
-	private Direction direction = Direction.RIGHT;
-	private int length;
-	private List<Rectangle> tiles = new ArrayList<>();
+	private static Endscreen		endscreen;
+	private Direction				direction	= Direction.RIGHT;
+	private int						length;
+	private final List<Rectangle>	tiles		= new ArrayList<>();
 
 	private static final int TILE_SIZE = 10;
 
@@ -78,7 +78,7 @@ public class Snake implements Updateable {
 	 * @since Snake 1.0
 	 */
 	public void addLength(int additional) {
-		Rectangle last = tiles.get(tiles.size() - 1);
+		final Rectangle last = tiles.get(tiles.size() - 1);
 		for (int i = 0; i < additional; i++)
 			tiles.add(last);
 		length += additional;
@@ -96,9 +96,9 @@ public class Snake implements Updateable {
 	 * @since Snake 1.1
 	 */
 	private void gameOver() {
+		Main.getGame().close();
 		endscreen = new Endscreen(length);
 		endscreen.setVisible(true);
-		Main.getGame().close();
 	}
 
 	@Override

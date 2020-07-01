@@ -4,9 +4,7 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.KeyEvent;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import dev.lh.Main;
@@ -26,9 +24,7 @@ public class StartScreen extends JFrame {
 	/**
 	 * Closes the application.
 	 */
-	public static void close() {
-		System.exit(0);
-	}
+	public static void close() { System.exit(0); }
 
 	/**
 	 * Launches Snake.
@@ -36,25 +32,22 @@ public class StartScreen extends JFrame {
 	 * @param args the program arguments
 	 * @since Snake 1.0
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(StartScreen::new);
-	}
+	public static void main(String[] args) { EventQueue.invokeLater(StartScreen::new); }
 
 	/**
 	 * Create the frame.
 	 */
 	public StartScreen() {
 		setTitle("Snake - Startscreen");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setBounds(500, 200, 550, 550);
 
-		JPanel contentPane = new JPanel();
+		final JPanel contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 
-		JButton buPlay = new JButton("Start Game");
+		final JButton buPlay = new JButton("Start Game");
 		buPlay.setBounds(158, 197, 190, 131);
-		buPlay.setText("Play Again");
 		buPlay.setMnemonic(KeyEvent.VK_ENTER);
 		buPlay.setFont(new Font("Times New Roman", Font.PLAIN, 16));
 		buPlay.addActionListener(a -> {
