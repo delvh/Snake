@@ -1,6 +1,7 @@
 package dev.lh.ui;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Font;
 import java.awt.event.KeyEvent;
 
 import javax.swing.*;
@@ -20,9 +21,9 @@ public class Endscreen extends JDialog {
 
 	private static final long serialVersionUID = -4457484397259161063L;
 
-	private static final int goodOrBadResult = 200;
-	private final JPanel contentPanel = new JPanel();
-	private final int score;
+	// private static final int goodOrBadResult = 200;
+	private final JPanel	contentPanel	= new JPanel();
+	private final int		score;
 
 	/**
 	 * Create the dialog.
@@ -49,9 +50,10 @@ public class Endscreen extends JDialog {
 		lblDeinPunktestand.setFont(new Font("Times New Roman", Font.PLAIN, 25));
 		contentPanel.add(lblDeinPunktestand, BorderLayout.NORTH);
 
-		final Image resultImage = Toolkit.getDefaultToolkit()
-			.getImage(this.getClass().getResource(score < goodOrBadResult ? "/Try_Again.jpg" : "/1211548-200.png"));
-		resultImage.flush();
+		// final Image resultImage = Toolkit.getDefaultToolkit()
+		// .getImage(this.getClass().getResource(score < goodOrBadResult ?
+		// "/Try_Again.jpg" : "/1211548-200.png"));
+		// resultImage.flush();
 	}
 
 	/**
