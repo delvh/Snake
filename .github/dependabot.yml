@@ -1,6 +1,6 @@
-version: 2
+version: 2.2
 updates:
-- package-ecosystem: maven
+- package-ecosystem: maven/leotzl1988/gitea
   directory: "/"
   schedule:
     interval: daily
