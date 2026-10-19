@@ -1,54 +1,55 @@
 package dev.lh.ui;
 
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.Timer;
 
-import dev.lh.FoodFactory;
-import dev.lh.Snake;
+import dev.lh.*;
 import dev.lh.Snake.Direction;
 
+/**
+ * Project: <strong>Snake</strong><br>
+ * File: <strong>GameWindow.java</strong><br>
+ * Created: <strong>11 Mar 2020</strong><br>
+ *
+ * @author Leon Hofmeister
+ * @since Snake 1.0
+ */
 public class GameWindow extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	private Snake s = new Snake(7);
-	private FoodFactory foodFactory = FoodFactory.getInstance();
 
+	private Viewport viewport;
+
+	/**
+	 * @param title the title of the frame
+	 * @since Snake 1.0
+	 */
 	public GameWindow(String title) {
+		// Initialize window
 		super(title);
-		newFood();
 		Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
 		setBounds(new Rectangle(size));
-		setLocationRelativeTo(null);
+		setLocation(0, 0);
 		setMinimumSize(size);
 		setPreferredSize(size);
 		setMaximumSize(size);
-		setExtendedState(JFrame.MAXIMIZED_BOTH);
+		setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
 		setResizable(false);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
+		// Initialize game objects
+		Snake snake = new Snake(7);
+		FoodFactory foodFactory = new FoodFactory(getWidth(), getHeight());
+		Handler handler = new Handler(snake, foodFactory);
 
-		add(new JPanel() {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			protected void paintComponent(Graphics g) {
-				super.paintComponent(g);
-				g.setColor(Color.black);
-				g.fillRect(0, 0, super.getWidth(), super.getHeight());
-				s.render(g);
-				foodFactory.paintFood(g);
-			}
-		});
+		// Initialize viewport
+		viewport = new Viewport(handler);
+		add(viewport);
 
 		addKeyListener(new KeyAdapter() {
 
@@ -56,42 +57,42 @@ public class GameWindow extends JFrame {
 			public void keyPressed(KeyEvent e) {
 				super.keyPressed(e);
 				switch (e.getKeyCode()) {
-				case KeyEvent.VK_W:
-				case KeyEvent.VK_UP:
-					s.setRichtung(Direction.Up);
-					break;
-				case KeyEvent.VK_A:
-				case KeyEvent.VK_LEFT:
-					s.setRichtung(Direction.Left);
-					break;
-				case KeyEvent.VK_S:
-				case KeyEvent.VK_DOWN:
-					s.setRichtung(Direction.Down);
-					break;
-				case KeyEvent.VK_D:
-				case KeyEvent.VK_RIGHT:
-					s.setRichtung(Direction.Right);
-					break;
-				}// switch
-			}// keypressed
-		});// keylistener
-
-		Timer timer = new Timer(50, (evt) -> {
-			s.tick();
-			if(System.currentTimeMillis()>=foodFactory.getTimeOfNextFood()) newFood();
-			repaint();
+					case KeyEvent.VK_W:
+					case KeyEvent.VK_UP:
+						if (!snake.getDirection().equals(Direction.DOWN))
+							snake.setDirection(Direction.UP);
+						break;
+					case KeyEvent.VK_A:
+					case KeyEvent.VK_LEFT:
+						if (!snake.getDirection().equals(Direction.RIGHT))
+							snake.setDirection(Direction.LEFT);
+						break;
+					case KeyEvent.VK_S:
+					case KeyEvent.VK_DOWN:
+						if (!snake.getDirection().equals(Direction.UP))
+							snake.setDirection(Direction.DOWN);
+						break;
+					case KeyEvent.VK_D:
+					case KeyEvent.VK_RIGHT:
+						if (!snake.getDirection().equals(Direction.LEFT))
+							snake.setDirection(Direction.RIGHT);
+						break;
+				}
+			}
 		});
-		timer.start();
 
 		setVisible(true);
+		viewport.start();
 	}
 
-	public void newFood() {
-		foodFactory.generateFood();
-		foodFactory.generateFoodLocation(super.getWidth(), super.getHeight());
-	}
-
+	/**
+	 * Disposes this frame.
+	 *
+	 * @since Snake 1.1
+	 */
 	public void close() {
+		viewport.stop();
+		setVisible(false);
 		dispose();
 	}
 }

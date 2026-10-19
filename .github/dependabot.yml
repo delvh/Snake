@@ -1,0 +1,7 @@
+version: 2.2
+updates:
+- package-ecosystem: maven/leotzl1988/gitea
+  directory: "/"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
